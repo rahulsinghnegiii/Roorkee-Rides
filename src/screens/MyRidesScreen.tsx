@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Clock } from 'lucide-react'
-import { useApp } from '../context/AppContext'
+import { useApp, Ride } from '../context/AppContext'
 import Header from '../components/Header'
 import BottomNavigation from '../components/BottomNavigation'
 import RideHistoryItem from '../components/RideHistoryItem'

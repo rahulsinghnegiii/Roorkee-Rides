@@ -1,14 +1,4 @@
-export interface Driver {
-  id: string;
-  name: string;
-  phone: string;
-  rating: number;
-  vehicleNumber: string;
-  vehicleType: 'bike' | 'auto' | 'car';
-  photo: string;
-  totalRides: number;
-  experience: string;
-}
+import { Driver } from '../context/AppContext';
 
 export const drivers: Driver[] = [
   {

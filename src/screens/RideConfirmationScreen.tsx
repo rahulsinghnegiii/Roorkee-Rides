@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Phone, Star, MapPin, Clock, X, Navigation } from 'lucide-react'
-import { useApp } from '../context/AppContext'
+import { useApp, Ride, Vehicle, Driver } from '../context/AppContext'
 import Header from '../components/Header'
 import DriverCard from '../components/DriverCard'
 import { drivers } from '../data/drivers'
+import { vehicles } from '../data/vehicles'
 
 export default function RideConfirmationScreen() {
   const navigate = useNavigate()
@@ -57,14 +58,13 @@ export default function RideConfirmationScreen() {
 
   const handleCompleteRide = () => {
     if (pickup && drop && selectedVehicle && driver) {
-      const newRide = {
+      const newRide: Ride = {
         id: Date.now().toString(),
         pickup,
         drop,
-        vehicleType: selectedVehicle.type,
-        driverName: driver.name,
-        driverPhoto: driver.photo,
-        status: 'completed' as const,
+        vehicle: selectedVehicle,
+        driver,
+        status: 'completed',
         fare: selectedVehicle.price,
         date: new Date().toLocaleDateString(),
         time: new Date().toLocaleTimeString()

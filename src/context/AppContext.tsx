@@ -1,20 +1,20 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react'
 
-interface User {
+export interface User {
   id: string
   name: string
   phone: string
   walletBalance: number
 }
 
-interface Location {
+export interface Location {
   id: string
   name: string
   address: string
   coordinates: { lat: number; lng: number }
 }
 
-interface Vehicle {
+export interface Vehicle {
   id: string
   type: 'auto' | 'bike' | 'car'
   name: string
@@ -24,7 +24,7 @@ interface Vehicle {
   icon: string
 }
 
-interface Driver {
+export interface Driver {
   id: string
   name: string
   phone: string
@@ -32,9 +32,11 @@ interface Driver {
   vehicleNumber: string
   vehicleType: string
   photo: string
+  totalRides?: number
+  experience?: string
 }
 
-interface Ride {
+export interface Ride {
   id: string
   pickup: Location
   drop: Location
