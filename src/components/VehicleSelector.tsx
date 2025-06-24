@@ -1,6 +1,8 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { Vehicle } from '../data/vehicles';
+import { vehicles } from '../data/vehicles';
+
+type Vehicle = typeof vehicles[0];
 
 interface VehicleSelectorProps {
   vehicles: Vehicle[];

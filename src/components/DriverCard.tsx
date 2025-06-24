@@ -1,6 +1,6 @@
 import React from 'react';
 import { Phone, Star } from 'lucide-react';
-import { Driver } from '../data/drivers';
+import { Driver } from '../context/AppContext';
 
 interface DriverCardProps {
   driver: Driver;

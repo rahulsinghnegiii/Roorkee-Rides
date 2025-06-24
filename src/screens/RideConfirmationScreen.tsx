@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Phone, Star, MapPin, Clock, X, Navigation } from 'lucide-react'
-import { useApp, Ride, Vehicle, Driver } from '../context/AppContext'
+import { useApp } from '../context/AppContext'
 import Header from '../components/Header'
 import DriverCard from '../components/DriverCard'
 import { drivers } from '../data/drivers'
-import { vehicles } from '../data/vehicles'
 
 export default function RideConfirmationScreen() {
   const navigate = useNavigate()
@@ -58,13 +57,14 @@ export default function RideConfirmationScreen() {
 
   const handleCompleteRide = () => {
     if (pickup && drop && selectedVehicle && driver) {
-      const newRide: Ride = {
+      // Create a Ride object matching the Ride interface in AppContext
+      const newRide = {
         id: Date.now().toString(),
         pickup,
         drop,
         vehicle: selectedVehicle,
         driver,
-        status: 'completed',
+        status: 'completed' as const,
         fare: selectedVehicle.price,
         date: new Date().toLocaleDateString(),
         time: new Date().toLocaleTimeString()
@@ -100,6 +100,13 @@ export default function RideConfirmationScreen() {
     )
   }
 
+  // Add missing properties to the driver if needed
+  const enhancedDriver = {
+    ...driver,
+    totalRides: driver.totalRides || 100,
+    experience: driver.experience || '1 year'
+  }
+
   return (
     <div className="min-h-screen bg-white flex flex-col">
       <Header title="Your Ride" showBack />
@@ -126,7 +133,7 @@ export default function RideConfirmationScreen() {
       {/* Driver Info */}
       {rideStatus !== 'searching' && (
         <div className="px-4 py-6 border-b border-gray-100">
-          <DriverCard driver={driver} />
+          <DriverCard driver={enhancedDriver} />
         </div>
       )}
 

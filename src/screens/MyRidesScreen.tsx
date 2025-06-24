@@ -1,18 +1,43 @@
 import React, { useState } from 'react'
 import { Clock } from 'lucide-react'
-import { useApp, Ride } from '../context/AppContext'
+import { useApp } from '../context/AppContext'
 import Header from '../components/Header'
 import BottomNavigation from '../components/BottomNavigation'
 import RideHistoryItem from '../components/RideHistoryItem'
-import { pastRides, upcomingRides } from '../data/rides'
+import { pastRides, upcomingRides, RideData } from '../data/rides'
 
 export default function MyRidesScreen() {
   const { state } = useApp()
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('completed')
 
+  // Convert context rides to RideData format
+  const convertContextRideToRideData = (ride: any): RideData => {
+    return {
+      id: ride.id,
+      pickup: ride.pickup,
+      drop: ride.drop,
+      vehicleType: ride.vehicle?.type || 'car',
+      driverName: ride.driver?.name || 'Driver',
+      driverPhoto: ride.driver?.photo || '👨',
+      status: ride.status,
+      fare: ride.fare,
+      date: ride.date,
+      time: ride.time,
+      driverRating: 0
+    }
+  }
+
   // Combine rides from context and dummy data
-  const completedRides = [...(state.rides.filter(ride => ride.status === 'completed')), ...pastRides]
-  const upcoming = [...(state.rides.filter(ride => ride.status === 'upcoming')), ...upcomingRides]
+  const contextCompletedRides = state.rides
+    .filter(ride => ride.status === 'completed')
+    .map(convertContextRideToRideData)
+  
+  const contextUpcomingRides = state.rides
+    .filter(ride => ride.status === 'upcoming')
+    .map(convertContextRideToRideData)
+
+  const completedRides = [...contextCompletedRides, ...pastRides]
+  const upcoming = [...contextUpcomingRides, ...upcomingRides]
   
   const filteredRides = activeTab === 'completed' ? completedRides : upcoming
 
